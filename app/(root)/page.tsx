@@ -1,5 +1,7 @@
 import StartupCard from '@/components/StartupCard';
 import SearchForm from '../../components/SearchForm';
+import { client } from '@/sanity/lib/client';
+import { STARTUPS_QUERY } from '@/sanity/lib/queries';
 
 export default async function Home({
   searchParams,
@@ -8,19 +10,23 @@ export default async function Home({
 }) {
   const query = (await searchParams).query || '';
 
-  const posts = [
-    {
-      _createdAt: new Date(),
-      views: 55,
-      author: { _id: 1, name: 'Peter' },
-      _id: 1,
-      description: 'This is a description',
-      image:
-        'https://s3.vct.news/uploads/2023060201064/0e69446a54f9dc68ad6ee224c1edbbe71a45587777e95e324a8c02d1e2f8283d.jpg',
-      category: 'Robots',
-      title: 'We Robots',
-    },
-  ];
+  const posts = await client.fetch(STARTUPS_QUERY);
+
+  // console.log(JSON.stringify(posts, null, 2));
+
+  // const posts = [
+  //   {
+  //     _createdAt: new Date(),
+  //     views: 55,
+  //     author: { _id: 1, name: 'Peter' },
+  //     _id: 1,
+  //     description: 'This is a description',
+  //     image:
+  //       'https://s3.vct.news/uploads/2023060201064/0e69446a54f9dc68ad6ee224c1edbbe71a45587777e95e324a8c02d1e2f8283d.jpg',
+  //     category: 'Robots',
+  //     title: 'We Robots',
+  //   },
+  // ];
 
   return (
     <>
